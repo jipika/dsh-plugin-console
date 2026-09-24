@@ -1,10 +1,10 @@
 {
   "name": "@noob-stupid/dsh-plugin-console",
-  "version": "0.3.63-local.1",
-  "description": "DSH 插件中心（本地改版）：插件管理/市场额外提升为设置窗口左侧导航的独立分栏（settings.section#plugin-console），原「设置 → 插件」tab 保留。基于上游 0.3.63。",
+  "version": "0.3.65-local.1",
+  "description": "DSH 插件中心（本地改版）：插件管理/市场额外提升为设置窗口左侧导航的独立分栏（settings.section#plugin-console），原「设置 → 插件」tab 保留。基于上游 0.3.65。",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Noob-stupid/dsh-plugin-hub"
+    "url": "https://github.com/Noob-stupid/dsh-plugin-gating-hub"
   },
   "type": "module",
   "main": "./lib/index.js",
@@ -16,7 +16,21 @@
   "keywords": [
     "dsh-plugin",
     "deepseek-harness",
-    "plugin-manager"
+    "plugin-manager",
+    "dsh",
+    "dsh-plugins",
+    "plugin-market",
+    "plugin-console",
+    "marketplace",
+    "framework-upgrade",
+    "rollback",
+    "auto-rollback",
+    "upgrade-safety",
+    "gating",
+    "插件市场",
+    "框架升级",
+    "自动回滚",
+    "插件升级门控"
   ],
   "dsh": {
     "bundle": {

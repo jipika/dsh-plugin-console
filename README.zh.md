@@ -2,8 +2,8 @@
 >
 > **这不是上游官方仓库**，而是我在本机使用的改版快照：基于上游
 > [`Noob-stupid/dsh-plugin-hub`](https://github.com/Noob-stupid/dsh-plugin-hub) 的
-> `@noob-stupid/dsh-plugin-console@0.3.63`（MIT）。与上游的差异**只有两处**：
-> `package.json` 的 `version`（`0.3.63-local.1`）与 `description`，以及新增的
+> `@noob-stupid/dsh-plugin-console@0.3.65`（MIT）。与上游的差异**只有两处**：
+> `package.json` 的 `version`（`0.3.65-local.1`）与 `description`，以及新增的
 > `tests/settings-section-probe.mjs` 探针脚本；`lib/` 代码与上游逐字一致。
 > 上游版权归 Noob-stupid，本仓库不是上游的发布渠道。
 
@@ -15,16 +15,34 @@
 
 <img width="1170" height="609" alt="image" src="https://github.com/user-attachments/assets/b802d606-14ba-4151-9956-ff642ed12b0a" />
 
-# DSH 插件中心（dsh-plugin-hub）
+# DSH 插件门控中心（dsh-plugin-gating-hub）
 
-> 一站式管理你的 DeepSeek Harness 插件：一键启用/停用、500+ 插件与技能市场一键安装、
-> 框架一键升级（失败自动回滚）。
+*原名 `dsh-plugin-hub`，已改名；旧链接 301 跳转有效。*
 
-## 为什么是 DSH 插件中心
+> **DSH 框架升级安全与插件升级门控**：一键框架升级（**失败自动回滚**）→ 升级后**一键回滚到
+> 上一版** → 新框架带不动的插件**自动禁用** → **插件升级门控**按版本/声明拒绝装不上的插件版本。
+> **内置多源插件市场与自定义索引**（500+ 插件 / 300+ 技能，零 GitHub API 调用）作为**发现层**——
+> 而且**每一条源都能换成你自己的**：安装源（含内网私有 registry）、搜索源（URL 模板 + 请求头）、
+> 索引源（内网自建索引）、Git 源（含 `file://` 本地裸仓库），**纯内网 / 断网也能装插件**。
 
-- 🧩 **插件 + 技能双市场** — 自动收录 `dsh-plugin` 仓库（按 star **500+**）外加技能 tab；
-  浏览、搜索、一键安装，**零 GitHub API 调用**（CDN 分发，秒开零限流）。
-- 🚀 **框架一键升级** — 备份 → 在线安装（服务不中断）→ 校验 → **失败自动回滚**，端到端实测。
+## 为什么是 DSH 插件门控中心
+
+- 🛡️ **一键框架升级，失败自动回滚** — 备份配置 + 升级前全树 checkpoint（回滚点）→ 在线安装
+  （服务不中断、页面不断开）→ 版本校验 → 自动重启生效；安装失败**自动全树回滚**，
+  版本校验防假成功，15 分钟硬超时 + 卡死检测——框架绝不处于损坏状态。
+  → [详见](docs/upgrade-safety-adapt-gate.zh.md)
+- ↩️ **升级后一键回滚到上一版** — 升级成功后框架卡片保留「回滚到上一版」：停服 → 全树恢复 →
+  自动拉起 → 健康检测，全程状态可见。
+- 🚫 **旧插件不适配自动禁用** — 适配门把新框架加载不了的插件**强制禁用**（启用按钮锁定，
+  服务端 `/toggle` 直接 409、无法绕过）；「检测更新 → 更新并适配」自动校验后解锁。
+- 🔒 **插件升级门控** — 按 `dsh.engines.framework` / `engines.dsh` 声明与 `@deepseek-ai/*`
+  依赖范围（内置零依赖 semver 判定器）判定插件版本能否在本宿主运行，
+  避免框架升级把插件悄悄带下线。
+- 🧩 **内置发现层：多源插件市场** — GitHub / Gitee / 自定义源，外加静态索引（按 star 收录
+  `dsh-plugin` 仓库 **500+**）与技能 tab（最多 300）；浏览、搜索、一键安装，
+  **零 GitHub API 调用**（CDN 分发，秒开零限流）。
+  **每条源都能换成你自己的** —— 内网私有 npm registry、自定义搜索源（URL 模板 + 请求头）、
+  内网自建索引源、Git 源（含 `file://` 本地裸仓库），**纯内网 / 断网环境照样浏览与安装**。
 - 🤖 **AI 赋能** — 输入 npm 包名或 GitHub 仓库，本地 AI 读文档生成**部署计划**
   （安装/写配置/启动服务/健康检查），你确认后安全执行；服务器组件自动生成控制卡片。
   → [详见](docs/ai-empower.zh.md)
@@ -198,6 +216,9 @@ git clone https://github.com/Noob-stupid/dsh-plugin-hub /tmp/dsh-plugin-console 
   （gitee.com → 数据管理 → 第三方应用，权限勾选 user_info、projects）后填入
   client_id / client_secret → 保存 → 授权登录。
 
+<img width="393" height="525" alt="image" src="https://github.com/user-attachments/assets/caacbe78-034b-4151-b1d1-2b67b73a5de6" />
+
+
 ---
 
 ## 文档
@@ -290,5 +311,5 @@ MIT
 - **已验证**：19 套测试全绿 · 8 条架构守卫断言 · 与稳定版逐条对打**路由清单一致**（`status` + 响应字段）；
 - **已实测**（2026-09-20 真装真卸演练）：普通插件 / bundle 插件 / 无 npm 仓库 / 套装 / 技能 / 聚合仓库子包 / 仓库落地 / 服务器组件启停；
 - **尚未实测**：真框架升级 / 真回滚、重启守护链路、AI 真跑、Gitee OAuth 回调（长尾风险主观估计 **10%~25%**）；
-- **日常使用请继续用**：npm `@noob-stupid/dsh-plugin-console@0.3.63`，或本仓库 `main`。
+- **日常使用请继续用**：npm `@noob-stupid/dsh-plugin-console@0.3.65`，或本仓库 `main`。
 - 请多反馈问题
