@@ -7,6 +7,10 @@
 > `tests/settings-section-probe.mjs` 探针脚本；`lib/` 代码与上游逐字一致。
 > 上游版权归 Noob-stupid，本仓库不是上游的发布渠道。
 
+> **拥有**：`settings.section#plugin-console`：插件管理/市场提升为设置窗口的独立分栏。
+> **冲突时**：与上游 `@noob-stupid/dsh-plugin-console` 同 entry id，**不能与上游版本并存**；官方「设置 → 插件」tab 保留。
+> **回滚**：整包替换回上游版本（README 顶部记录了两者的全部差异）。
+
 ---
 
 > **English**: [README.md](README.md) | **中文**: [README.zh.md](README.zh.md)
